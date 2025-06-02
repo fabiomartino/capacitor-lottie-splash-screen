@@ -84,7 +84,7 @@ extension AnimationEventListener {
                 if completed || (!completed && self.loopMode == .loop) {
                     self.isAnimationEnded = true
                     self.onAnimationEvent?(.onAnimationEnd)
-                    if /* self.isAppLoaded || */ self.autoHide {
+                    if self.isAppLoaded || self.autoHide {
                         self.hideSplashScreen()
                     }
                 }

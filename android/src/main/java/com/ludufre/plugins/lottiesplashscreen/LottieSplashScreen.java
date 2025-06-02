@@ -108,7 +108,7 @@ public class LottieSplashScreen {
                 try {
                     isAnimationEnded = true;
                     animationEventListener.onAnimationEvent(ON_ANIMATION_END);
-                    if (autoHide) {
+                    if (isAppLoaded || autoHide) {
                         hideDialog();
                     }
                 } catch (Exception ex) {
