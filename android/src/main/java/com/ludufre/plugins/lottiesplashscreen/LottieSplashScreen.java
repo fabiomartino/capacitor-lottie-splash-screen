@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -95,6 +96,7 @@ public class LottieSplashScreen {
         lottieAnimationView.setRepeatCount(loopMode ? 999_999 : 0);
         lottieAnimationView.setSpeed(1F);
         lottieAnimationView.playAnimation();
+        lottieAnimationView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         lottieAnimationView.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(@NonNull Animator animator) {
