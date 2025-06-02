@@ -17,6 +17,15 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
 
+## Preview
+<div align="center">
+  <img src="./example/src/assets/ios.gif" alt="Preview" width="150" style="max-width:150px;">
+  <img src="./example/src/assets/android.gif" alt="Preview" width="150" style="max-width:150px;"><br>
+  
+  [Angular Example](./example/README.md)
+</div>
+
+
 ## Maintainers
 
 | Maintainer             | GitHub                                | Social                            |
@@ -78,6 +87,9 @@ const config: CapacitorConfig = {
   - You must call `LottieSplashScreen.hide()` to remove the splash screen; the animation end is not waited for.
 
 ## Example
+
+See the [Angular Example](./example/README.md) for a complete example of how to use the plugin in an Ionic Angular application.
+
 
 Call `LottieSplashScreen.appLoaded();` when the App is ready.
 
