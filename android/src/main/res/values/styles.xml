@@ -1,0 +1,5 @@
+<resources>
+    <style name="AppTheme.LottieSplashScreen" >
+        <item name="android:colorBackground">@android:color/transparent</item>
+    </style>
+</resources>
