@@ -26,9 +26,9 @@
 
 ## Maintainers
 
-| Maintainer             | GitHub                                | Social                            |
-| ---------------------- | ------------------------------------- | --------------------------------- |
-| Luan Freitas (ludufre) | [ludufre](https://github.com/ludufre) | [@ludufre](https://x.com/ludufre) |
+| Maintainer             | GitHub                                | Social                            | LinkedIn                                                           |
+| ---------------------- | ------------------------------------- | --------------------------------- | ------------------------------------------------------------------ |
+| Luan Freitas (ludufre) | [ludufre](https://github.com/ludufre) | [@ludufre](https://x.com/ludufre) | [Luan Freitas](https://www.linkedin.com/in/luan-freitas-14341687/) |
 
 ## Installation
 
@@ -128,9 +128,9 @@ LottieSplashScreen.addListener('onAnimationEnd', () => {
 
 ## Highly Inspired / Credits
 
-https://github.com/Get-Local/capacitor-lottie-splash-screen
-https://github.com/MorphoodInc/capacitor-lottie-splash-screen
-https://github.com/muhammadosmanali/capacitor-lottie-splash-screen
+- https://github.com/Get-Local/capacitor-lottie-splash-screen
+- https://github.com/MorphoodInc/capacitor-lottie-splash-screen
+- https://github.com/muhammadosmanali/capacitor-lottie-splash-screen
 
 ## API
 
