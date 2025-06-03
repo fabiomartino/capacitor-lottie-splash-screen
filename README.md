@@ -7,9 +7,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/maintenance/yes/2025?style=flat-square" />
-  <a href="https://github.com/ludufre/capacitor-lottie-splash-screen/actions?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/actions/workflow/status/ludufre/capacitor-lottie-splash-screen/test.yml" /></a>
   <a href="https://www.npmjs.com/package/capacitor-lottie-splash-screen"><img src="https://img.shields.io/npm/l/capacitor-lottie-splash-screen?style=flat-square" /></a>
-<br>
   <a href="https://www.npmjs.com/package/capacitor-lottie-splash-screen"><img src="https://img.shields.io/npm/dw/capacitor-lottie-splash-screen?style=flat-square" /></a>
   <a href="https://www.npmjs.com/package/capacitor-lottie-splash-screen"><img src="https://img.shields.io/npm/v/capacitor-lottie-splash-screen?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
@@ -19,10 +17,10 @@
 
 ## Preview
 <div align="center">
-  <img src="./example/src/assets/ios.gif" alt="Preview" width="150" style="max-width:150px;">
-  <img src="./example/src/assets/android.gif" alt="Preview" width="150" style="max-width:150px;"><br>
+  <img src="./example-app/src/assets/ios.gif" alt="Preview" width="150" style="max-width:150px;">
+  <img src="./example-app/src/assets/android.gif" alt="Preview" width="150" style="max-width:150px;"><br>
   
-  [Angular Example](./example/README.md)
+  [Angular Example](./example-app/README.md)
 </div>
 
 
@@ -88,7 +86,7 @@ const config: CapacitorConfig = {
 
 ## Example
 
-See the [Angular Example](./example/README.md) for a complete example of how to use the plugin in an Ionic Angular application.
+See the [Angular Example](./example-app/README.md) for a complete example of how to use the plugin in an Ionic Angular application.
 
 
 Call `LottieSplashScreen.appLoaded();` when the App is ready.
