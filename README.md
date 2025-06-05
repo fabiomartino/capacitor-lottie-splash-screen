@@ -13,16 +13,18 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-0-orange?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+<br />
+<a href="https://www.buymeacoffee.com/ludufre"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-ludufre-fce802?style=flat-square" alt="Buy me a coffee"></a>
 </p>
 
 ## Preview
+
 <div align="center">
   <img src="./example-app/src/assets/ios.gif" alt="Preview" width="150" style="max-width:150px;">
   <img src="./example-app/src/assets/android.gif" alt="Preview" width="150" style="max-width:150px;"><br>
   
   [Angular Example](./example-app/README.md)
 </div>
-
 
 ## Maintainers
 
@@ -88,7 +90,6 @@ const config: CapacitorConfig = {
 
 See the [Angular Example](./example-app/README.md) for a complete example of how to use the plugin in an Ionic Angular application.
 
-
 Call `LottieSplashScreen.appLoaded();` when the App is ready.
 
 ```typescript
@@ -132,16 +133,18 @@ LottieSplashScreen.addListener('onAnimationEnd', () => {
 - https://github.com/MorphoodInc/capacitor-lottie-splash-screen
 - https://github.com/muhammadosmanali/capacitor-lottie-splash-screen
 
+<a href="https://www.buymeacoffee.com/ludufre"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png"></a>
+
 ## API
 
 <docgen-index>
 
-* [`appLoaded()`](#apploaded)
-* [`show()`](#show)
-* [`hide()`](#hide)
-* [`isAnimating()`](#isanimating)
-* [`addListener('onAnimationEnd', ...)`](#addlisteneronanimationend-)
-* [Interfaces](#interfaces)
+- [`appLoaded()`](#apploaded)
+- [`show()`](#show)
+- [`hide()`](#hide)
+- [`isAnimating()`](#isanimating)
+- [`addListener('onAnimationEnd', ...)`](#addlisteneronanimationend-)
+- [Interfaces](#interfaces)
 
 </docgen-index>
 
@@ -162,8 +165,7 @@ and touch interactions will go to the app.
 
 If `loop` is set to `true` the splash screen will be terminated immediately.
 
---------------------
-
+---
 
 ### show()
 
@@ -173,8 +175,7 @@ show() => void
 
 Show the splash screen programatically.
 
---------------------
-
+---
 
 ### hide()
 
@@ -186,8 +187,7 @@ Hide the splash screen.
 
 This will hide the splash screen without waiting for animation end.
 
---------------------
-
+---
 
 ### isAnimating()
 
@@ -199,8 +199,7 @@ Check if the splash screen is currently animating.
 
 **Returns:** <code>Promise&lt;{ isAnimating: boolean; }&gt;</code>
 
---------------------
-
+---
 
 ### addListener('onAnimationEnd', ...)
 
@@ -219,11 +218,9 @@ This event is triggered when the splash screen animation ends.
 
 **Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
---------------------
-
+---
 
 ### Interfaces
-
 
 #### PluginListenerHandle
 
