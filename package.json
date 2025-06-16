@@ -49,7 +49,7 @@
     "build-module": "npm run clean && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm run build && node scripts/sanitize-team-id.js",
     "release": "standard-version && npm publish",
     "prepare": "npm run build-module"
   },
