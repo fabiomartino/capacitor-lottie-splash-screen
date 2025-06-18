@@ -1,10 +1,20 @@
+//
+//  LottieSplashScreenPlugin.swift
+//  LottieSplashScreenPlugin
+//
+//  @description Capacitor bridge class for exposing Lottie splash screen to JS.
+//
+
 import Capacitor
 import Foundation
 
+/// Capacitor plugin entry point for Lottie splash screen features
 @objc(LottieSplashScreenPlugin)
 public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "LottieSplashScreenPlugin"
     public let jsName = "LottieSplashScreen"
+
+    /// Plugin method bindings exposed to JavaScript
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "hide", returnType: CAPPluginReturnNone),
         CAPPluginMethod(name: "show", returnType: CAPPluginReturnNone),
@@ -13,35 +23,39 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
     ]
     public static var isEnabledStatic = true
     private let implementation = LottieSplashScreen()
-    
+
+    /// JS → Native: Show the splash screen again
     @objc func show(_ call: CAPPluginCall) {
         implementation.show();
         call.resolve();
     }
-    
+
+    /// JS → Native: Hide the splash screen immediately
     @objc func hide(_ call: CAPPluginCall) {
         implementation.hide();
         call.resolve();
     }
-    
+
+    /// JS → Native: Notify the plugin that the app has loaded
     @objc func appLoaded(_ call: CAPPluginCall) {
         implementation.onAppLoaded()
         call.resolve();
     }
-    
+
+    /// Plugin lifecycle hook called after plugin is loaded
     override public func load() {
-        if !LottieSplashScreenPlugin.isEnabledStatic {
-            print("\(LottieSplashScreen.TAG) Not enabled statically (!?)")
+        guard LottieSplashScreenPlugin.isEnabledStatic else {
+            log("Not enabled statically (!?)")
             return
         }
         let isEnabled = getConfig().getBoolean("enabled", true)
         
-        print("\(LottieSplashScreen.TAG) Started")
+        log("Started")
         
         if isEnabled {
             var animation = getConfig().getString("animationLight", "")
             if (animation == ""){
-                NSLog("\(LottieSplashScreen.TAG) Animation must be provided in ionic.config.ts|json")
+                log("Animation must be provided in ionic.config.ts|json")
                 return
             }
             var backgroundColor = getConfig().getString("backgroundLight", "#FFFFFF")
@@ -53,12 +67,12 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
             var loopAnimation =  getConfig().getBoolean("loop", false)
             
             if autoHide, loopAnimation {
-                NSLog("\(LottieSplashScreen.TAG) autoHide and loop cannot be true at the same time. Loop will be disabled.")
+                log("autoHide and loop cannot be true at the same time. Loop will be disabled.")
                 loopAnimation = false
             }
             
             if #available(iOS 13.0, *), UITraitCollection.current.userInterfaceStyle == .dark {
-                print("\(LottieSplashScreen.TAG) Dark mode detected. Using dark animation and color")
+                log("Dark mode detected. Using dark animation and color")
                 if darkAnimation != "" {
                     animation = darkAnimation
                 }
@@ -67,10 +81,10 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
                 }
             }
             
-            print("\(LottieSplashScreen.TAG) Animation path: \(animation ?? "")")
-            print("\(LottieSplashScreen.TAG) Background color: \(backgroundColor ?? "")")
-            print("\(LottieSplashScreen.TAG) Auto Hide: \(autoHide)")
-            print("\(LottieSplashScreen.TAG) Loop Animation: \(loopAnimation)")
+            log("Animation path:", animation)
+            log("Background color:", backgroundColor)
+            log("Auto Hide:", autoHide)
+            log("Loop Animation:", loopAnimation)
             
             implementation.loadLottie(
                 view: self.bridge?.viewController?.view,
@@ -79,17 +93,19 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
                 autoHide: autoHide,
                 loopMode: loopAnimation)
         }else{
-            print("\(LottieSplashScreen.TAG) Not enabled")
+            log("Not enabled")
         }
         implementation.onAnimationEvent = onAnimationEvent
     }
-    
+
+    /// Internal listener callback triggered on animation end
     public func onAnimationEvent(event: AnimationEventListener) {
-        print("\(LottieSplashScreen.TAG) onAnimationEvent", event.listenerEvent)
+        log("onAnimationEvent", event.listenerEvent)
         self.bridge?.triggerWindowJSEvent(eventName: event.listenerEvent)
         self.notifyListeners(event.listenerEvent, data: nil)
     }
-    
+
+    /// JS → Native: Check if the splash screen is animating
     @objc func isAnimating(_ call: CAPPluginCall) {
         call.resolve([
             "isAnimating": implementation.isAnimating()

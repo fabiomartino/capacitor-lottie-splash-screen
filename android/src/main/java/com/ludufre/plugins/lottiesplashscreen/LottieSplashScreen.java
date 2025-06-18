@@ -19,8 +19,14 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.capacitor.lottie.R;
 
+/**
+ * Handles showing, hiding and controlling the Lottie-based splash screen on Android.
+ */
 public class LottieSplashScreen {
 
+    /**
+     * Interface for listening to animation events (e.g. onAnimationEnd).
+     */
     interface AnimationEventListener{
         void onAnimationEvent(String event);
     }
@@ -38,26 +44,50 @@ public class LottieSplashScreen {
 
     Dialog dialog = null;
 
+    /**
+     * Assigns a listener to receive animation lifecycle events.
+     */
     public void setAnimationEventListener(@Nullable AnimationEventListener animationEventListener) {
         this.animationEventListener = animationEventListener;
     }
 
+    /**
+     * Should be called when the app is ready. It will hide the splash if animation is complete or looping.
+     */
     public void onAppLoaded() {
         isAppLoaded = true;
         if(isAnimationEnded || loopMode){
             hideDialog();
         }
     }
+
+    /**
+     * Hides the splash screen dialog.
+     */
     public void hideDialog() {
         if (dialog != null) {
             dialog.cancel();
         }
     }
 
+    /**
+     * Checks if the splash screen animation is currently active.
+     *
+     * @return true if still animating, false if done.
+     */
     public boolean isAnimating() {
         return !isAnimationEnded;
     }
 
+    /**
+     * Shows the Lottie splash screen dialog.
+     *
+     * @param context         Android context
+     * @param lottiePath      Path to the Lottie animation JSON
+     * @param backgroundColor Hex string background color (e.g. #FFFFFF)
+     * @param autoHide        Whether to hide the splash automatically when animation ends
+     * @param loopAnimation   Whether to loop the Lottie animation
+     */
     public void ShowLottieSplashScreenDialog(Context context, String lottiePath, String backgroundColor, boolean autoHide, boolean loopAnimation) {
         new Handler(Looper.getMainLooper()).post(() -> {
             if (dialog != null) {
@@ -77,6 +107,7 @@ public class LottieSplashScreen {
 
             loadLottie(dialog, lottiePath);
 
+            // Fullscreen and transparent background setup
             View decorView = dialog.getWindow().getDecorView();
             int uiOptions = decorView.getSystemUiVisibility();
             uiOptions |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
@@ -90,6 +121,9 @@ public class LottieSplashScreen {
         });
     }
 
+    /**
+     * Loads and starts the Lottie animation inside the dialog.
+     */
     private void loadLottie(Dialog dialog, String lottiePath) {
         lottieAnimationView = dialog.findViewById(R.id.animationView);
         lottieAnimationView.setAnimation(lottiePath);

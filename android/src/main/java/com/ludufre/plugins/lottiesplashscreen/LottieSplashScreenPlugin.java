@@ -13,6 +13,9 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 
 import java.util.Objects;
 
+/**
+ * Capacitor plugin bridge for exposing Lottie splash screen functionality to JavaScript.
+ */
 @CapacitorPlugin(name = "LottieSplashScreen")
 public class LottieSplashScreenPlugin extends Plugin {
     private final LottieSplashScreen implementation = new LottieSplashScreen();
@@ -44,6 +47,9 @@ public class LottieSplashScreenPlugin extends Plugin {
         call.resolve(ret);
     }
 
+    /**
+     * Called by Capacitor when the plugin is loaded.
+     */
     public void load() {
         if (!isEnabledStatic) {
             Log.e(LottieSplashScreen.TAG, "Not enabled statically (!?)");
@@ -61,12 +67,18 @@ public class LottieSplashScreenPlugin extends Plugin {
         implementation.setAnimationEventListener(this::onAnimationEvent);
     }
 
+    /**
+     * Callback from native animation to JS listeners.
+     */
     public void onAnimationEvent(String event) {
         Log.i(LottieSplashScreen.TAG, "onAnimationEvent");
         bridge.triggerWindowJSEvent(event);
         notifyListeners(event, null);
     }
 
+    /**
+     * Displays the splash dialog with options from capacitor.config.
+     */
     private void ShowLottieSplashScreenDialog() {
         Context context = this.getContext();
 
@@ -106,6 +118,11 @@ public class LottieSplashScreenPlugin extends Plugin {
         implementation.ShowLottieSplashScreenDialog(context, animation, backgroundColor, autoHide, loopAnimation);
     }
 
+    /**
+     * Checks if the device is in dark mode.
+     *
+     * @return true if dark mode is enabled
+     */
     private boolean isDarkMode(){
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
         return false;

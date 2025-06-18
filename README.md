@@ -49,13 +49,13 @@ Add to `capacitor.config.ts` or `capcitor.config.json`
 const config: CapacitorConfig = {
   ...
   LottieSplashScreen: {
-    enabled: true, // Can be disabled and called manually with .show() & .hide(). Can coexist with @capacitor/splash-screen
-    animationLight: "public/assets/[path/to.json]", // Required!
-    animationDark: "public/assets/[path/to.json]", // Optional (default: same as animationLight)
-    backgroundLight: "#FFFFFF", // Optional (default: #FFFFFF)
-    backgroundDark: "#000000", // Optional (default: #000000)
-    autoHide: false, // Hide after animation ends - Optional (default: false)
-    loop: false, // Enable animation loop - Optional (default: false)
+    enabled: true, // Enables the Lottie splash (can still be shown manually)
+    animationLight: 'public/assets/[path/to.json]', // REQUIRED: Path to Lottie file for light mode
+    animationDark: 'public/assets/[path/to.json]',   // Optional: Lottie for dark mode (defaults to animationLight)
+    backgroundLight: '#FFFFFF', // Optional: background color in light mode (default: #FFFFFF)
+    backgroundDark: '#000000', // Optional: background color in dark mode (default: #000000)
+    autoHide: false, // Auto-hide after animation ends (if false, call appLoaded manually)
+    loop: false,     // Loop animation (not recommended with autoHide: true)
   },
   SplashScreen: {
     launchAutoHide: true, // Disables @capacitor/splash-screen
@@ -81,6 +81,7 @@ const config: CapacitorConfig = {
 
   - If `loop` is `true`, the animation will continue looping until `LottieSplashScreen.appLoaded()` is called (which stops it immediately).
   - To play the animation only once, set `loop` to `false` (default behavior).
+  - Tip: If `loop: true` and `autoHide: true`, the plugin will disable looping automatically (they’re incompatible). Use `loop: true` only when you’re controlling the splash manually.
 
 - **Manual display:**
   - When calling `LottieSplashScreen.show()`, the splash screen appears and starts playing the animation immediately.
@@ -94,8 +95,14 @@ Call `LottieSplashScreen.appLoaded();` when the App is ready.
 
 ```typescript
 // Splash screen will only close after this call and the animation ends unless you set "autoHide: true" which will hide it automatically.
-this.platform.ready().then(() => {
-  LottieSplashScreen.appLoaded();
+import { Platform } from '@ionic/angular';
+import { LottieSplashScreen } from 'capacitor-lottie-splash-screen';
+
+constructor(private platform: Platform) {
+  this.platform.ready().then(() => {
+    // Call this AFTER the app is ready and bootstrapped
+    LottieSplashScreen.appLoaded();
+  });
 }
 
 // Another way with Angular provideAppInitializer() (reaplces APP_INITIALIZER) to ensure the app is loaded before proceeding
@@ -139,12 +146,12 @@ LottieSplashScreen.addListener('onAnimationEnd', () => {
 
 <docgen-index>
 
-- [`appLoaded()`](#apploaded)
-- [`show()`](#show)
-- [`hide()`](#hide)
-- [`isAnimating()`](#isanimating)
-- [`addListener('onAnimationEnd', ...)`](#addlisteneronanimationend-)
-- [Interfaces](#interfaces)
+* [`appLoaded()`](#apploaded)
+* [`show()`](#show)
+* [`hide()`](#hide)
+* [`isAnimating()`](#isanimating)
+* [`addListener('onAnimationEnd', ...)`](#addlisteneronanimationend-)
+* [Interfaces](#interfaces)
 
 </docgen-index>
 
@@ -157,15 +164,16 @@ LottieSplashScreen.addListener('onAnimationEnd', () => {
 appLoaded() => void
 ```
 
-Indicate to the plugin that the app has loaded.
+Notify the plugin that the app has fully loaded.
 
-Run as early as possible when your app is loaded.
-This will ensure that on animation end the layer of the splash screen is removed
-and touch interactions will go to the app.
+Call this method as early as possible after your app has bootstrapped.
+It allows the plugin to gracefully finish or remove the splash animation overlay.
+If the splash is configured to loop, this will forcibly stop it.
 
-If `loop` is set to `true` the splash screen will be terminated immediately.
+**Since:** 7.0.0
 
----
+--------------------
+
 
 ### show()
 
@@ -173,9 +181,14 @@ If `loop` is set to `true` the splash screen will be terminated immediately.
 show() => void
 ```
 
-Show the splash screen programatically.
+Programmatically show the splash screen animation again.
 
----
+This is useful for scenarios like restarting the splash for a specific action or navigation flow.
+
+**Since:** 7.0.0
+
+--------------------
+
 
 ### hide()
 
@@ -183,11 +196,14 @@ Show the splash screen programatically.
 hide() => void
 ```
 
-Hide the splash screen.
+Hide the splash screen immediately, skipping the animation completion.
 
-This will hide the splash screen without waiting for animation end.
+Use this when you want to forcefully remove the splash overlay (e.g., on error or timeout).
 
----
+**Since:** 7.0.0
+
+--------------------
+
 
 ### isAnimating()
 
@@ -195,11 +211,16 @@ This will hide the splash screen without waiting for animation end.
 isAnimating() => Promise<{ isAnimating: boolean; }>
 ```
 
-Check if the splash screen is currently animating.
+Check if the splash animation is currently running.
+
+Returns a boolean wrapped in a promise indicating the splash screen’s active state.
 
 **Returns:** <code>Promise&lt;{ isAnimating: boolean; }&gt;</code>
 
----
+**Since:** 7.0.0
+
+--------------------
+
 
 ### addListener('onAnimationEnd', ...)
 
@@ -207,20 +228,24 @@ Check if the splash screen is currently animating.
 addListener(eventName: 'onAnimationEnd', listenerFunc: () => void) => Promise<PluginListenerHandle>
 ```
 
-Add a listener for the 'onAnimationEnd' event.
+Register a listener for the splash animation end event.
 
-This event is triggered when the splash screen animation ends.
+This event is triggered once the animation finishes and the overlay is removed.
 
-| Param              | Type                          |
-| ------------------ | ----------------------------- |
-| **`eventName`**    | <code>'onAnimationEnd'</code> |
-| **`listenerFunc`** | <code>() =&gt; void</code>    |
+| Param              | Type                          | Description                                                   |
+| ------------------ | ----------------------------- | ------------------------------------------------------------- |
+| **`eventName`**    | <code>'onAnimationEnd'</code> | - Must be `'onAnimationEnd'`                                  |
+| **`listenerFunc`** | <code>() =&gt; void</code>    | - A callback function that runs when the animation completes. |
 
 **Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
----
+**Since:** 7.0.0
+
+--------------------
+
 
 ### Interfaces
+
 
 #### PluginListenerHandle
 
