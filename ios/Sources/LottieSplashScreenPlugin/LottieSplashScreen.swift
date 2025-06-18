@@ -1,12 +1,22 @@
+//
+//  LottieSplashScreen.swift
+//  LottieSplashScreenPlugin
+//
+//  @description Native Swift logic for showing and hiding a Lottie-based splash screen overlay.
+//
+
 import Foundation
 import Lottie
 import UIKit
+import Capacitor
 
+/// Enumeration for supported animation lifecycle events
 @objc public enum AnimationEventListener: Int {
     case onAnimationEnd
 }
 
 extension AnimationEventListener {
+    /// JavaScript-friendly event string
     var listenerEvent: String {
         switch self {
         case .onAnimationEnd:
@@ -15,8 +25,11 @@ extension AnimationEventListener {
     }
 }
 
+/// Core controller class for managing the Lottie splash screen lifecycle
 @objc public class LottieSplashScreen: NSObject {
-    
+
+    // MARK: - Internal State
+
     private var animationView: LottieAnimationView?
     private var isAppLoaded = false
     private var isAnimationEnded = !LottieSplashScreenPlugin.isEnabledStatic
@@ -28,28 +41,32 @@ extension AnimationEventListener {
     private var containerView: UIView?
     private var lottiePath: String?
     private var backgroundColor: UIColor?
-    
-    public static let TAG: String = "✨  Lottie-Splash-Screen:"
+
     public typealias AnimationEventListenerCallback = (AnimationEventListener) -> Void
     
     @objc public var onAnimationEvent: AnimationEventListenerCallback?
+
+    // MARK: - Public API
     
+    /// Check whether the splash animation is currently active
     public func isAnimating() -> Bool {
         return !isAnimationEnded
     }
-    
+
+    /// Notify the plugin that the app has fully loaded
     func onAppLoaded() {
         isAppLoaded = true
         if isAnimationEnded || loopMode == .loop {
             hideSplashScreen()
         }
     }
-    
+
+    /// Hide the splash screen immediately
     @objc public func hide() -> Void {
         hideSplashScreen()
     }
     
-    // Re-show the splash screen by reinstantiating the animation view
+    /// Show the splash screen again programmatically
     @objc public func show() -> Void {
         DispatchQueue.main.async {
             guard let containerView = self.containerView,
@@ -60,13 +77,13 @@ extension AnimationEventListener {
             
             self.isAnimationEnded = false
             
-            // Criar view de fundo
+            // Set up background
             self.backgroundView = UIView()
-            self.backgroundView!.backgroundColor = self.backgroundColor // ou qualquer cor
+            self.backgroundView!.backgroundColor = self.backgroundColor
             self.backgroundView!.frame = UIScreen.main.bounds
             containerView.addSubview(self.backgroundView!)
             
-            // Criar animação Lottie
+            // Set up Lottie animation
             self.animationView = .init(name: filename)
             self.animationView!.frame = UIScreen.main.bounds
             self.animationView!.contentMode = .scaleAspectFit
@@ -91,11 +108,10 @@ extension AnimationEventListener {
             }
         }
     }
-    
-    // Set up the splash, storing values needed for a future 'show'
+
+    /// Initialize the splash screen with animation and color configuration
     public func loadLottie(view: UIView?, path: String?, backgroundColor: String? = nil, autoHide: Bool = false, loopMode: Bool = false) {
-        
-        
+
         // Save the container and asset information for re-showing the splash later.
         self.containerView = view
         self.lottiePath = path
@@ -104,14 +120,15 @@ extension AnimationEventListener {
         if(loopMode == true){
             self.loopMode = .loop
         }
-        
-        
+
         // Initially display the splash screen.
         self.show()
     }
-    
+
+    // MARK: - Internal Methods
+
     func hideSplashScreen() {
-        print("\(LottieSplashScreen.TAG) Hiding splash screen")
+        log("Hiding splash screen")
         DispatchQueue.main.async {
             self.animationView?.removeFromSuperview()
             self.backgroundView?.removeFromSuperview()

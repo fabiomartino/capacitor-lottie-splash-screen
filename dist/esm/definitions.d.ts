@@ -1,35 +1,91 @@
+/**
+ * @file definitions.ts
+ * @description TypeScript type definitions for the LottieSplashScreen Capacitor plugin.
+ */
 import type { PluginListenerHandle } from '@capacitor/core';
+/**
+ * @interface LottieSplashScreenPlugin
+ * @description Defines the native methods and event listeners provided by the LottieSplashScreen plugin.
+ *
+ * This plugin allows developers to show animated Lottie-based splash screens during app startup.
+ */
 export interface LottieSplashScreenPlugin {
     /**
-     * Indicate to the plugin that the app has loaded.
+     * Notify the plugin that the app has fully loaded.
      *
-     * Run as early as possible when your app is loaded.
-     * This will ensure that on animation end the layer of the splash screen is removed
-     * and touch interactions will go to the app.
+     * Call this method as early as possible after your app has bootstrapped.
+     * It allows the plugin to gracefully finish or remove the splash animation overlay.
+     * If the splash is configured to loop, this will forcibly stop it.
      *
-     * If `loop` is set to `true` the splash screen will be terminated immediately.
-     **/
+     * @example
+     * ```ts
+     * LottieSplashScreen.appLoaded();
+     * ```
+     *
+     * @since 7.0.0
+     */
     appLoaded(): void;
     /**
-     * Show the splash screen programatically.
-     **/
+     * Programmatically show the splash screen animation again.
+     *
+     * This is useful for scenarios like restarting the splash for a specific action or navigation flow.
+     *
+     * @example
+     * ```ts
+     * LottieSplashScreen.show();
+     * ```
+     *
+     * @since 7.0.0
+     */
     show(): void;
     /**
-     * Hide the splash screen.
+     * Hide the splash screen immediately, skipping the animation completion.
      *
-     * This will hide the splash screen without waiting for animation end.
-     **/
+     * Use this when you want to forcefully remove the splash overlay (e.g., on error or timeout).
+     *
+     * @example
+     * ```ts
+     * LottieSplashScreen.hide();
+     * ```
+     *
+     * @since 7.0.0
+     */
     hide(): void;
     /**
-     * Check if the splash screen is currently animating.
+     * Check if the splash animation is currently running.
+     *
+     * Returns a boolean wrapped in a promise indicating the splash screen’s active state.
+     *
+     * @returns A promise resolving to an object: `{ isAnimating: boolean }`
+     *
+     * @example
+     * ```ts
+     * const { isAnimating } = await LottieSplashScreen.isAnimating();
+     * console.log(isAnimating); // true or false
+     * ```
+     *
+     * @since 7.0.0
      */
     isAnimating(): Promise<{
         isAnimating: boolean;
     }>;
     /**
-     * Add a listener for the 'onAnimationEnd' event.
+     * Register a listener for the splash animation end event.
      *
-     * This event is triggered when the splash screen animation ends.
+     * This event is triggered once the animation finishes and the overlay is removed.
+     *
+     * @param eventName - Must be `'onAnimationEnd'`
+     * @param listenerFunc - A callback function that runs when the animation completes.
+     * @returns A promise resolving to a `PluginListenerHandle` for removing the listener if needed.
+     *
+     * @example
+     * ```ts
+     * const handle = await LottieSplashScreen.addListener('onAnimationEnd', () => {
+     *   console.log('Splash animation finished');
+     * });
+     * ```
+     *
+     * @since 7.0.0
      */
     addListener(eventName: 'onAnimationEnd', listenerFunc: () => void): Promise<PluginListenerHandle>;
 }
