@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [7.1.0](https://github.com/ludufre/capacitor-lottie-splash-screen/compare/v7.0.2...v7.1.0) (2025-06-18)
+## [7.2.0](https://github.com/ludufre/capacitor-lottie-splash-screen/compare/v7.1.0...v7.2.0) (2025-06-18)
+
+
+### Features
+
+* migrate to SPM, add iOS logging util, update deps, improve docs ([5818aeb](https://github.com/ludufre/capacitor-lottie-splash-screen/commit/5818aeb)) - Thanks to @fabiomartino for the contribution!
+
+
+## [7.1.0](https://github.com/ludufre/capacitor-lottie-splash-screen/compare/v7.0.2...v7.1.0) (2025-06-16)
 
 
 ### Features
