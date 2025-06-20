@@ -10,7 +10,9 @@
     "android/src/main/",
     "android/build.gradle",
     "dist/",
-    "ios/Plugin/",
+    "ios/Sources",
+    "ios/Tests",
+    "Package.swift",
     "CapacitorLottieSplashScreen.podspec"
   ],
   "author": "Luan Freitas (ludufre)",
@@ -66,7 +68,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-java": "^2.6.8",
     "rimraf": "^6.0.1",
-    "rollup": "^4.43.0",
+    "rollup": "^4.44.0",
     "standard-version": "^9.5.0",
     "swiftlint": "^2.0.0",
     "typescript": "~5.8.3"
