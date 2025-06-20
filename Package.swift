@@ -11,7 +11,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", from: "7.0.0"),
-        .package(url: "https://github.com/airbnb/lottie-ios.git", from: "4.3.0")
+        .package(url: "https://github.com/airbnb/lottie-ios.git", from: "4.3.4")
     ],
     targets: [
         .target(
