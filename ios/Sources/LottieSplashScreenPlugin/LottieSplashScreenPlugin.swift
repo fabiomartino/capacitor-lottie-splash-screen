@@ -19,27 +19,27 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "hide", returnType: CAPPluginReturnNone),
         CAPPluginMethod(name: "show", returnType: CAPPluginReturnNone),
         CAPPluginMethod(name: "appLoaded", returnType: CAPPluginReturnNone),
-        CAPPluginMethod(name: "isAnimating", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isAnimating", returnType: CAPPluginReturnPromise)
     ]
     public static var isEnabledStatic = true
     private let implementation = LottieSplashScreen()
 
     /// JS → Native: Show the splash screen again
     @objc func show(_ call: CAPPluginCall) {
-        implementation.show();
-        call.resolve();
+        implementation.show()
+        call.resolve()
     }
 
     /// JS → Native: Hide the splash screen immediately
     @objc func hide(_ call: CAPPluginCall) {
-        implementation.hide();
-        call.resolve();
+        implementation.hide()
+        call.resolve()
     }
 
     /// JS → Native: Notify the plugin that the app has loaded
     @objc func appLoaded(_ call: CAPPluginCall) {
         implementation.onAppLoaded()
-        call.resolve();
+        call.resolve()
     }
 
     /// Plugin lifecycle hook called after plugin is loaded
@@ -49,28 +49,28 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
             return
         }
         let isEnabled = getConfig().getBoolean("enabled", true)
-        
+
         log("Started")
-        
+
         if isEnabled {
             var animation = getConfig().getString("animationLight", "")
-            if (animation == ""){
+            if animation == "" {
                 log("Animation must be provided in ionic.config.ts|json")
                 return
             }
             var backgroundColor = getConfig().getString("backgroundLight", "#FFFFFF")
-            
+
             let darkAnimation = getConfig().getString("animationDark", "")
             let darkBackgroundColor = getConfig().getString("backgroundDark", "#000000")
-            
+
             let autoHide = getConfig().getBoolean("autoHide", false)
             var loopAnimation =  getConfig().getBoolean("loop", false)
-            
+
             if autoHide, loopAnimation {
                 log("autoHide and loop cannot be true at the same time. Loop will be disabled.")
                 loopAnimation = false
             }
-            
+
             if #available(iOS 13.0, *), UITraitCollection.current.userInterfaceStyle == .dark {
                 log("Dark mode detected. Using dark animation and color")
                 if darkAnimation != "" {
@@ -80,19 +80,19 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
                     backgroundColor = darkBackgroundColor
                 }
             }
-            
+
             log("Animation path:", animation)
             log("Background color:", backgroundColor)
             log("Auto Hide:", autoHide)
             log("Loop Animation:", loopAnimation)
-            
+
             implementation.loadLottie(
                 view: self.bridge?.viewController?.view,
                 path: animation,
                 backgroundColor: backgroundColor,
                 autoHide: autoHide,
                 loopMode: loopAnimation)
-        }else{
+        } else {
             log("Not enabled")
         }
         implementation.onAnimationEvent = onAnimationEvent
@@ -111,5 +111,5 @@ public class LottieSplashScreenPlugin: CAPPlugin, CAPBridgedPlugin {
             "isAnimating": implementation.isAnimating()
         ])
     }
-    
+
 }

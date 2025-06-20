@@ -1,1 +1,24 @@
-dist
+# Output folders
+dist/
+build/
+node_modules/
+
+# Capacitor web assets
+example-app/www/
+example-app/android/app/src/main/assets/public/
+example-app/ios/App/App/public/
+
+# Android build
+android/build/
+example-app/android/app/build/
+
+# Capacitor native copies
+*.app/
+**/Frameworks/**/*.js
+**/native-bridge.js
+
+# Test reports
+android/build/reports/
+
+# Anything else you want to ignore
+karma.conf.js

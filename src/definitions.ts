@@ -91,8 +91,5 @@ export interface LottieSplashScreenPlugin {
    *
    * @since 7.0.0
    */
-  addListener(
-    eventName: 'onAnimationEnd',
-    listenerFunc: () => void
-  ): Promise<PluginListenerHandle>;
+  addListener(eventName: 'onAnimationEnd', listenerFunc: () => void): Promise<PluginListenerHandle>;
 }

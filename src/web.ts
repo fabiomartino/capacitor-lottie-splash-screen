@@ -55,9 +55,6 @@ export class LottieSplashScreenWeb extends WebPlugin implements LottieSplashScre
    * @returns {CapacitorException} A descriptive exception with `Unimplemented` code.
    */
   private createUnimplementedError(): CapacitorException {
-    return new CapacitorException(
-      'LottieSplashScreen is not supported on the web.',
-      ExceptionCode.Unimplemented
-    );
+    return new CapacitorException('LottieSplashScreen is not supported on the web.', ExceptionCode.Unimplemented);
   }
 }

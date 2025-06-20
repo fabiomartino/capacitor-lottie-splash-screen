@@ -33,9 +33,9 @@ extension AnimationEventListener {
     private var animationView: LottieAnimationView?
     private var isAppLoaded = false
     private var isAnimationEnded = !LottieSplashScreenPlugin.isEnabledStatic
-    private var autoHide = false;
-    private var loopMode = LottieLoopMode.playOnce;
-    
+    private var autoHide = false
+    private var loopMode = LottieLoopMode.playOnce
+
     // Store parameters to allow re-showing the splash screen
     private var backgroundView: UIView?
     private var containerView: UIView?
@@ -43,11 +43,11 @@ extension AnimationEventListener {
     private var backgroundColor: UIColor?
 
     public typealias AnimationEventListenerCallback = (AnimationEventListener) -> Void
-    
+
     @objc public var onAnimationEvent: AnimationEventListenerCallback?
 
     // MARK: - Public API
-    
+
     /// Check whether the splash animation is currently active
     public func isAnimating() -> Bool {
         return !isAnimationEnded
@@ -62,27 +62,27 @@ extension AnimationEventListener {
     }
 
     /// Hide the splash screen immediately
-    @objc public func hide() -> Void {
+    @objc public func hide() {
         hideSplashScreen()
     }
-    
+
     /// Show the splash screen again programmatically
-    @objc public func show() -> Void {
+    @objc public func show() {
         DispatchQueue.main.async {
             guard let containerView = self.containerView,
                   let path = self.lottiePath,
                   let filename = path.components(separatedBy: ".").first else {
                 return
             }
-            
+
             self.isAnimationEnded = false
-            
+
             // Set up background
             self.backgroundView = UIView()
             self.backgroundView!.backgroundColor = self.backgroundColor
             self.backgroundView!.frame = UIScreen.main.bounds
             containerView.addSubview(self.backgroundView!)
-            
+
             // Set up Lottie animation
             self.animationView = .init(name: filename)
             self.animationView!.frame = UIScreen.main.bounds
@@ -91,12 +91,12 @@ extension AnimationEventListener {
             self.animationView!.animationSpeed = 1
             self.animationView!.translatesAutoresizingMaskIntoConstraints = false
             self.backgroundView!.addSubview(self.animationView!)
-            
+
             NSLayoutConstraint.activate([
                 self.animationView!.widthAnchor.constraint(equalTo: self.backgroundView!.widthAnchor),
                 self.animationView!.heightAnchor.constraint(equalTo: self.backgroundView!.heightAnchor)
             ])
-            
+
             self.animationView!.play { completed in
                 if completed || (!completed && self.loopMode == .loop) {
                     self.isAnimationEnded = true
@@ -117,7 +117,7 @@ extension AnimationEventListener {
         self.lottiePath = path
         self.backgroundColor = UIColor.capacitor.color(fromHex: backgroundColor!)
         self.autoHide = autoHide
-        if(loopMode == true){
+        if loopMode == true {
             self.loopMode = .loop
         }
 
