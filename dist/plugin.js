@@ -42,21 +42,24 @@ var LottieSplashScreen = (function (exports, core) {
          */
         async show() {
             console.warn('LottieSplashScreen show() is not supported on web.');
-            throw this.createUnimplementedError();
+            return Promise.resolve();
+            // throw this.createUnimplementedError();
         }
         /**
          * Hide the splash screen (not implemented on web).
          */
         async hide() {
             console.warn('LottieSplashScreen hide() is not supported on web.');
-            throw this.createUnimplementedError();
+            return Promise.resolve();
+            // throw this.createUnimplementedError();
         }
         /**
          * Notify that the app has loaded (not implemented on web).
          */
         async appLoaded() {
             console.warn('LottieSplashScreen appLoaded() is not supported on web.');
-            throw this.createUnimplementedError();
+            return Promise.resolve();
+            // throw this.createUnimplementedError();
         }
         /**
          * Check if the splash screen is animating (always false on web).
@@ -65,14 +68,6 @@ var LottieSplashScreen = (function (exports, core) {
          */
         async isAnimating() {
             return { isAnimating: false };
-        }
-        /**
-         * Create a standardized exception for unimplemented web methods.
-         *
-         * @returns {CapacitorException} A descriptive exception with `Unimplemented` code.
-         */
-        createUnimplementedError() {
-            return new core.CapacitorException('LottieSplashScreen is not supported on the web.', core.ExceptionCode.Unimplemented);
         }
     }
 

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.2.2](https://github.com/ludufre/capacitor-lottie-splash-screen/compare/v7.2.0...v7.2.2) (2025-07-20)
+
+
+### Fix
+
+* change Exception to Warning on web
+
+
 ## [7.2.1](https://github.com/ludufre/capacitor-lottie-splash-screen/compare/v7.2.0...v7.2.1) (2025-07-11)
 
 

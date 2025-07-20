@@ -4,7 +4,7 @@
  * This implementation is non-functional and serves as a fallback for web platforms.
  */
 
-import { CapacitorException, ExceptionCode, WebPlugin } from '@capacitor/core';
+import { WebPlugin } from '@capacitor/core';
 import type { LottieSplashScreenPlugin } from './definitions';
 
 /**
@@ -21,7 +21,8 @@ export class LottieSplashScreenWeb extends WebPlugin implements LottieSplashScre
    */
   async show(): Promise<void> {
     console.warn('LottieSplashScreen show() is not supported on web.');
-    throw this.createUnimplementedError();
+    return Promise.resolve();
+    // throw this.createUnimplementedError();
   }
 
   /**
@@ -29,7 +30,8 @@ export class LottieSplashScreenWeb extends WebPlugin implements LottieSplashScre
    */
   async hide(): Promise<void> {
     console.warn('LottieSplashScreen hide() is not supported on web.');
-    throw this.createUnimplementedError();
+    return Promise.resolve();
+    // throw this.createUnimplementedError();
   }
 
   /**
@@ -37,7 +39,8 @@ export class LottieSplashScreenWeb extends WebPlugin implements LottieSplashScre
    */
   async appLoaded(): Promise<void> {
     console.warn('LottieSplashScreen appLoaded() is not supported on web.');
-    throw this.createUnimplementedError();
+    return Promise.resolve();
+    // throw this.createUnimplementedError();
   }
 
   /**
@@ -54,10 +57,7 @@ export class LottieSplashScreenWeb extends WebPlugin implements LottieSplashScre
    *
    * @returns {CapacitorException} A descriptive exception with `Unimplemented` code.
    */
-  private createUnimplementedError(): CapacitorException {
-    return new CapacitorException(
-      'LottieSplashScreen is not supported on the web.',
-      ExceptionCode.Unimplemented
-    );
-  }
+  // private createUnimplementedError(): CapacitorException {
+  //   return new CapacitorException('LottieSplashScreen is not supported on the web.', ExceptionCode.Unimplemented);
+  // }
 }

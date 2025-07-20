@@ -34,10 +34,4 @@ export declare class LottieSplashScreenWeb extends WebPlugin implements LottieSp
     isAnimating(): Promise<{
         isAnimating: boolean;
     }>;
-    /**
-     * Create a standardized exception for unimplemented web methods.
-     *
-     * @returns {CapacitorException} A descriptive exception with `Unimplemented` code.
-     */
-    private createUnimplementedError;
 }
